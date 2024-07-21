@@ -1,4 +1,4 @@
-package com.kta.app.utils
+package com.absensi.app.utils
 
 data class UserProfile(
     val id: String?,

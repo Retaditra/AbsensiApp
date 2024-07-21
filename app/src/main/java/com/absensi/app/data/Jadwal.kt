@@ -1,4 +1,4 @@
-package com.absensi.app
+package com.absensi.app.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

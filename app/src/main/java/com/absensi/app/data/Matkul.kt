@@ -1,4 +1,4 @@
-package com.absensi.app
+package com.absensi.app.data
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

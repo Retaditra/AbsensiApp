@@ -1,4 +1,4 @@
-package com.absensi.app
+package com.absensi.app.data
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -1,11 +1,11 @@
-package com.absensi.app.data.utils
+package com.absensi.app.utils
 
 import android.content.Context
 import android.graphics.drawable.PictureDrawable
 import com.absensi.app.data.respone.MessageResponse
+import com.absensi.app.data.utils.Constant
 import com.caverock.androidsvg.SVG
 import com.google.gson.Gson
-import com.kta.app.utils.SessionExpiredDialog
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Executors
@@ -25,11 +25,11 @@ fun parseError(error: String?): String {
     }
 }
 
-fun expired(it: String, context: Context) {
-    if (it == Constant.EXPIRED) {
-        SessionExpiredDialog.show(context)
-    }
-}
+//fun expired(it: String, context: Context) {
+//    if (it == Constant.EXPIRED) {
+//        SessionExpiredDialog.show(context)
+//    }
+//}
 
 fun statusDesc(statusCode: Int): String {
     return when (statusCode) {

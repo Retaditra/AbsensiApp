@@ -1,4 +1,4 @@
-package com.absensi.app
+package com.absensi.app.data
 
 import com.absensi.app.data.respone.*
 import retrofit2.Call

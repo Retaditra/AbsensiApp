@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [JadwalEntity::class], version = 1)
 abstract class JadwalDatabase : RoomDatabase() {
 
-    abstract fun scheduleDao(): JadwalDao
+    abstract fun jadwalDao(): JadwalDao
 
     companion object {
         @Volatile
