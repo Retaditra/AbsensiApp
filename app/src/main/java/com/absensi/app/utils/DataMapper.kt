@@ -1,77 +1,67 @@
 package com.absensi.app.utils
 
 import com.absensi.app.data.Jadwal
+import com.absensi.app.data.Pertemuan
+import com.absensi.app.data.database.JadwalEntity
+import com.absensi.app.data.respone.JadwalData
 import com.absensi.app.data.respone.PertemuanData
 
 class DataMapper {
-//    fun responseToSchedule(itemDataList: List<ScheduleData>): List<Schedule> {
-//        val scheduleList = mutableListOf<Schedule>()
-//
-//        for (itemData in itemDataList) {
-//            val itemSchedule = itemData.itemSchedule
-//            val schedule = Schedule(
-//                id_member = itemData.id_member,
-//                status_absent = itemData.status_absent,
-//                id = itemSchedule.id,
-//                name = itemSchedule.name,
-//                location = itemSchedule.location,
-//                time = itemSchedule.time,
-//                date = itemSchedule.date,
-//                absent = itemSchedule.absent,
-//                status = itemSchedule.status,
-//                pic = itemSchedule.pic,
-//                note = itemSchedule.note
-//            )
-//            scheduleList.add(schedule)
-//        }
-//
-//        return scheduleList
-//    }
+    fun responseToPertemuan(data: List<PertemuanData>): List<Pertemuan> {
+        return data.map {
+            Pertemuan(
+                id = it.id,
+                id_mk = it.id_mk,
+                namaMatkul = it.nama_mk,
+                pertemuan_ke = it.pertemuan_ke,
+                hari = it.hari,
+                tanggal = it.tanggal,
+                waktu = it.waktu,
+                namaDosen = it.nama_dsn,
+                kode_absensi = it.kode_absensi,
+                status = it.status,
+                keterangan = it.keterangan,
+            )
+        }
+    }
 
-//    fun scheduleToEntity(it: Schedule): ScheduleEntity {
-//        return ScheduleEntity(
-//            id_member = it.id_member,
-//            status_absent = it.status_absent,
-//            id = it.id,
-//            name = it.name,
-//            location = it.location,
-//            time = it.time,
-//            date = it.date,
-//            absent = it.absent,
-//            status = it.status,
-//            pic = it.pic,
-//            note = it.note
-//        )
-//    }
-
-//    fun entityToSchedule(entity: List<ScheduleEntity>): List<Schedule> {
-//        return entity.map {
-//            Schedule(
-//                id_member = it.id_member,
-//                status_absent = it.status_absent,
-//                id = it.id,
-//                name = it.name,
-//                location = it.location,
-//                time = it.time,
-//                date = it.date,
-//                absent = it.absent,
-//                status = it.status,
-//                pic = it.pic,
-//                note = it.note
-//            )
-//        }
-//    }
-
-    fun todayDataToDataMatkul(data: List<PertemuanData>): List<Jadwal> {
+    fun responseToJadwal(data: List<JadwalData>): List<Jadwal> {
         return data.map {
             Jadwal(
-                id = it.id,
+                idMk = it.id,
                 namaMatkul = it.nama_mk,
-                namaDosen  = it.nama_dsn,
+                namaDosen = it.nama_dsn,
+                semester = it.semester,
                 pertemuan_ke = it.pertemuan_ke,
-                hari = null,
+                hari = it.hari,
                 tanggal = it.tanggal,
+            )
+        }
+    }
 
+    fun jadwalToEntity(it: Jadwal): JadwalEntity {
+        return JadwalEntity(
+            id_mk = it.idMk,
+            nama_mk = it.namaMatkul.toString(),
+            nama_dsn = it.namaDosen.toString(),
+            semester = it.semester.toString(),
+            pertemuan_ke = it.pertemuan_ke.toString(),
+            hari = it.hari.toString(),
+            tanggal = it.tanggal.toString(),
+        )
+    }
+
+    fun entityToJadwal(entity: List<JadwalEntity>): List<Jadwal> {
+        return entity.map {
+            Jadwal(
+                id = it.id,
+                idMk = it.id_mk,
+                namaMatkul = it.nama_mk,
+                namaDosen = it.nama_dsn,
+                semester = it.semester,
+                pertemuan_ke = it.pertemuan_ke,
+                hari = it.hari,
+                tanggal = it.tanggal,
             )
         }
     }

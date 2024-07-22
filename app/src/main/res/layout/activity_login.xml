@@ -39,6 +39,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/loginLayout"
+        android:elevation="5dp"
+        app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -64,20 +66,29 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:text="Login"
+                android:paddingBottom="20dp"
                 android:textColor="@color/dark_red"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/white"
-                app:boxStrokeColor="@color/orange"
+                app:boxBackgroundColor="@color/silver"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+                app:boxStrokeColor="@color/silver_200"
                 app:boxStrokeErrorColor="@color/red"
-                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="1dp"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@null"
+                app:hintEnabled="false"
+                app:startIconMinSize="55dp"
                 app:hintTextColor="@color/white_grey">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -92,16 +103,23 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/white"
-                app:boxStrokeColor="@color/orange"
+                app:boxBackgroundColor="@color/silver"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+                app:boxStrokeColor="@color/silver_200"
                 app:boxStrokeErrorColor="@color/red"
-                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="1dp"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@null"
-                app:hintTextColor="@color/white_grey"
-                app:passwordToggleEnabled="true">
+                app:hintEnabled="false"
+                app:startIconMinSize="55dp"
+                app:hintTextColor="@color/white_grey">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/loginPassword"

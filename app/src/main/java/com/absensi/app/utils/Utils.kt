@@ -1,10 +1,7 @@
 package com.absensi.app.utils
 
 import android.content.Context
-import android.graphics.drawable.PictureDrawable
 import com.absensi.app.data.respone.MessageResponse
-import com.absensi.app.data.utils.Constant
-import com.caverock.androidsvg.SVG
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,11 +22,11 @@ fun parseError(error: String?): String {
     }
 }
 
-//fun expired(it: String, context: Context) {
-//    if (it == Constant.EXPIRED) {
-//        SessionExpiredDialog.show(context)
-//    }
-//}
+fun expired(it: String, context: Context) {
+    if (it == Constant.EXPIRED) {
+        SessionExpiredDialog.show(context)
+    }
+}
 
 fun statusDesc(statusCode: Int): String {
     return when (statusCode) {
@@ -49,21 +46,4 @@ fun formatDate(inputDate: String): String {
     } catch (e: Exception) {
         inputDate
     }
-}
-
-
-fun loadSvg(url: String, width: Int, height: Int, callback: (PictureDrawable?) -> Unit) {
-    Thread {
-        try {
-            val svg = SVG.getFromInputStream(java.net.URL(url).openStream())
-            svg.documentWidth = width.toFloat()
-            svg.documentHeight = height.toFloat()
-
-            val pictureDrawable = PictureDrawable(svg.renderToPicture())
-            callback(pictureDrawable)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            callback(null)
-        }
-    }.start()
 }

@@ -14,7 +14,7 @@ import com.absensi.app.databinding.ActivityMainBinding
 import com.absensi.app.login.LoginActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.kta.app.utils.EncryptPreferences
+import com.absensi.app.utils.EncryptPreferences
 
 
 class MainActivity : AppCompatActivity() {

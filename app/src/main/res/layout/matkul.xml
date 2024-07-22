@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/schedule"
+    style="?attr/materialCardViewElevatedStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="10dp"
+    android:backgroundTint="@color/white"
+    android:clickable="true"
+    android:elevation="5dp"
+    android:focusable="true"
+    app:rippleColor="@color/silver_200"
+    card_view:cardCornerRadius="15dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/nameMK"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Nama Matakuliah"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:transitionName="name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dosen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dosen : "
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameMK" />
+
+        <TextView
+            android:id="@+id/nameDsn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Dosen"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dosen"
+            app:layout_constraintStart_toEndOf="@+id/dosen"
+            app:layout_constraintTop_toTopOf="@+id/dosen" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

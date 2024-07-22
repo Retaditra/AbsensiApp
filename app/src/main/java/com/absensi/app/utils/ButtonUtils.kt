@@ -1,77 +1,84 @@
 package com.absensi.app.utils
 
+import android.content.Context
+import android.util.TypedValue
+import android.widget.Button
+import androidx.core.content.ContextCompat
+import com.absensi.app.R
+import com.absensi.app.data.Pertemuan
+
 object ButtonUtils {
 
-//    fun setButtonTextAndStyle(button: Button, schedule: Schedule) {
-//        val text: String
-//        val textSize: Float
-//        val textColor: Int
-//
-//        when {
-//            schedule.status == "0" && schedule.status_absent == "0" -> {
-//                text = "Absen"
-//                textSize = 12f
-//                textColor = ContextCompat.getColor(button.context, R.color.white)
-//            }
-//            schedule.status == "1" && schedule.status_absent == "0" -> {
-//                text = "Absen"
-//                textSize = 12f
-//                textColor = ContextCompat.getColor(button.context, R.color.white)
-//            }
-//            schedule.status == "1" && schedule.status_absent == "1" -> {
-//                text = "Hadir"
-//                textSize = 12f
-//                textColor = ContextCompat.getColor(button.context, R.color.white)
-//            }
-//            schedule.status == "2" && schedule.status_absent == "1" -> {
-//                text = "Hadir"
-//                textSize = 12f
-//                textColor = ContextCompat.getColor(button.context, R.color.white)
-//            }
-//            schedule.status == "2" && schedule.status_absent == "0" -> {
-//                text = "Tidak Hadir"
-//                textSize = 11f
-//                textColor = ContextCompat.getColor(button.context, R.color.red)
-//            }
-//            else -> {
-//                text = "Absen"
-//                textSize = 12f
-//                textColor = ContextCompat.getColor(button.context, R.color.white)
-//            }
-//        }
-//
-//        button.text = text
-//        button.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
-//        button.setTextColor(textColor)
-//    }
-//
-//
-//    fun setButtonBackgroundColor(context: Context, button: Button, schedule: Schedule) {
-//        button.setBackgroundColor(getButtonBackgroundColor(context, schedule))
-//    }
-//
-//    fun setButtonStatus(button: Button, schedule: Schedule) {
-//        button.isEnabled = schedule.status == "1" && schedule.status_absent == "0"
-//    }
-//
-//    private fun getButtonBackgroundColor(context: Context, schedule: Schedule): Int {
-//        return when {
-//            schedule.status == "0" && schedule.status_absent == "0" ->
-//                ContextCompat.getColor(context, R.color.silver_200)
-//
-//            schedule.status == "1" && schedule.status_absent == "0" ->
-//                ContextCompat.getColor(context, R.color.red)
-//
-//            schedule.status == "1" && schedule.status_absent == "1" ->
-//                ContextCompat.getColor(context, R.color.green)
-//
-//            schedule.status == "2" && schedule.status_absent == "1" ->
-//                ContextCompat.getColor(context, R.color.green)
-//
-//            schedule.status == "2" && schedule.status_absent == "0" ->
-//                ContextCompat.getColor(context, R.color.silver_200)
-//
-//            else -> ContextCompat.getColor(context, R.color.silver_200)
-//        }
-//    }
+    fun setButtonTextAndStyle(button: Button, pertemuan: Pertemuan) {
+        val text: String
+        val textSize: Float
+        val textColor: Int
+
+        when {
+            pertemuan.kode_absensi == "0" && pertemuan.status == "0" -> {
+                text = "Absen"
+                textSize = 12f
+                textColor = ContextCompat.getColor(button.context, R.color.white)
+            }
+            pertemuan.kode_absensi == "1" && pertemuan.status == "0" -> {
+                text = "Absen"
+                textSize = 12f
+                textColor = ContextCompat.getColor(button.context, R.color.white)
+            }
+            pertemuan.kode_absensi == "1" && pertemuan.status == "1" -> {
+                text = "Proses"
+                textSize = 12f
+                textColor = ContextCompat.getColor(button.context, R.color.white)
+            }
+            pertemuan.kode_absensi == "0" && pertemuan.status == "2" -> {
+                text = "Hadir"
+                textSize = 12f
+                textColor = ContextCompat.getColor(button.context, R.color.white)
+            }
+            pertemuan.kode_absensi == "0" && pertemuan.status == "3" -> {
+                text = "Izin"
+                textSize = 12f
+                textColor = ContextCompat.getColor(button.context, R.color.white)
+            }
+            else -> {
+                text = "Absen"
+                textSize = 12f
+                textColor = ContextCompat.getColor(button.context, R.color.white)
+            }
+        }
+
+        button.text = text
+        button.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
+        button.setTextColor(textColor)
+    }
+
+
+    fun setButtonBackgroundColor(context: Context, button: Button, pertemuan: Pertemuan) {
+        button.setBackgroundColor(getButtonBackgroundColor(context, pertemuan))
+    }
+
+    fun setButtonStatus(button: Button, pertemuan: Pertemuan) {
+        button.isEnabled = pertemuan.kode_absensi == "1" && pertemuan.status == "0"
+    }
+
+    private fun getButtonBackgroundColor(context: Context, pertemuan: Pertemuan): Int {
+        return when {
+            pertemuan.kode_absensi == "0" && pertemuan.status == "0" ->
+                ContextCompat.getColor(context, R.color.silver_200)
+
+            pertemuan.kode_absensi == "1" && pertemuan.status == "0" ->
+                ContextCompat.getColor(context, R.color.red)
+
+            pertemuan.kode_absensi == "1" && pertemuan.status == "1" ->
+                ContextCompat.getColor(context, R.color.gold)
+
+            pertemuan.kode_absensi == "0" && pertemuan.status == "2" ->
+                ContextCompat.getColor(context, R.color.green)
+
+            pertemuan.kode_absensi == "0" && pertemuan.status == "3" ->
+                ContextCompat.getColor(context, R.color.yellow)
+
+            else -> ContextCompat.getColor(context, R.color.silver_200)
+        }
+    }
 }

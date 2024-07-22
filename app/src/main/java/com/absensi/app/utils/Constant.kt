@@ -1,8 +1,8 @@
-package com.absensi.app.data.utils
+package com.absensi.app.utils
 
 object Constant {
-    const val KEY_MATKUL = "matkulData"
-    const val KEY_PTM = "pertemuanData"
+    const val MATKUL_ID = "matkulId"
+    const val PTM_ID = "PtmId"
     const val EXPIRED = "sesi berakhir"
     const val ABSENT = "Absensi berhasil"
 }

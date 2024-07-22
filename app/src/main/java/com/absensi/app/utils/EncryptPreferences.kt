@@ -1,4 +1,4 @@
-package com.kta.app.utils
+package com.absensi.app.utils
 
 import android.content.Context
 import android.content.SharedPreferences

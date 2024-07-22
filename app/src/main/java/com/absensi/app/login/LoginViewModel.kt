@@ -6,7 +6,7 @@ import com.absensi.app.R
 import com.absensi.app.data.ApiConfig
 import com.absensi.app.data.respone.LoginRequest
 import com.absensi.app.data.respone.LoginResponse
-import com.kta.app.utils.EncryptPreferences
+import com.absensi.app.utils.EncryptPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

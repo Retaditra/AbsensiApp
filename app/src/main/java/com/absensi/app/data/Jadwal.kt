@@ -5,7 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Jadwal(
-    val id: String,
+    val id: Int? = null,
+    val idMk: String,
     val namaMatkul: String? = null,
     val namaDosen: String? = null,
     val semester: String? = null,
