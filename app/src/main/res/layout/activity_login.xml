@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Email"
-                    android:inputType="phone"
+                    android:inputType="textEmailAddress"
                     tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,6 +119,7 @@
                 app:errorIconDrawable="@null"
                 app:hintEnabled="false"
                 app:startIconMinSize="55dp"
+                app:passwordToggleEnabled="true"
                 app:hintTextColor="@color/white_grey">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -128,7 +129,6 @@
                     android:ems="10"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    app:passwordToggleEnabled="true"
                     tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 

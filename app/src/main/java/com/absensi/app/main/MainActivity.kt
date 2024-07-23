@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //checkTokenAndNavigate()
+        checkTokenAndNavigate()
 
         viewPager = binding.viewPager
         tabLayout = binding.tabLayout

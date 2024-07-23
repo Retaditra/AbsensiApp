@@ -59,10 +59,6 @@ class LoginActivity : AppCompatActivity() {
             val phone = binding.loginEmail.text.toString()
             val password = binding.loginPassword.text.toString()
 
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-
             if (isInputValid(phone, password)) {
                 login(phone, password)
             }

@@ -4,6 +4,7 @@ import com.absensi.app.data.Jadwal
 import com.absensi.app.data.Pertemuan
 import com.absensi.app.data.database.JadwalEntity
 import com.absensi.app.data.respone.JadwalData
+import com.absensi.app.data.respone.MatkulData
 import com.absensi.app.data.respone.PertemuanData
 
 class DataMapper {
@@ -35,6 +36,17 @@ class DataMapper {
                 pertemuan_ke = it.pertemuan_ke,
                 hari = it.hari,
                 tanggal = it.tanggal,
+            )
+        }
+    }
+
+    fun responseToMatkul(data: List<MatkulData>): List<Jadwal> {
+        return data.map {
+            Jadwal(
+                idMk = it.id,
+                namaMatkul = it.nama_mk,
+                namaDosen = it.nama_dsn,
+                semester = it.semester,
             )
         }
     }

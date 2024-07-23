@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@drawable/curved_all"
-    android:backgroundTint="@color/silver"
+    android:background="@color/white_200"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="20dp"
+    app:cardCornerRadius="20dp">
 
     <TextView
         android:id="@+id/textMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingStart="30dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="30dp"
         android:text="Sesi login Anda telah berakhir. Silakan login kembali."
         android:textColor="@color/red_brick"
         android:textSize="15sp"
@@ -25,4 +22,5 @@
     <include
         android:id="@+id/btnLogin"
         layout="@layout/button" />
-</LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
