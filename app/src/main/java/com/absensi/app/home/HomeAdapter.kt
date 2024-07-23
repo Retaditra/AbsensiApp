@@ -1,5 +1,6 @@
 package com.absensi.app.home
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -7,8 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.absensi.app.data.Pertemuan
 import com.absensi.app.databinding.HistoryBinding
+import com.absensi.app.utils.ButtonUtils
 
-class HomeAdapter(private val absent: (Pertemuan) -> Unit) :
+class HomeAdapter(
+    private val context: Context,
+    private val absent: (Pertemuan) -> Unit
+) :
     PagingDataAdapter<Pertemuan, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -28,13 +33,17 @@ class HomeAdapter(private val absent: (Pertemuan) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(pertemuan: Pertemuan) {
-            val jamText = "${pertemuan.tanggal} WIB"
+            val jamText = "${pertemuan.waktu} WIB"
             with(binding) {
                 nameMK.text = pertemuan.namaMatkul
                 ptm.text = pertemuan.pertemuan_ke
                 tanggal.text = pertemuan.tanggal
                 jam.text = jamText
                 nameDsn.text = pertemuan.namaDosen
+
+                ButtonUtils.setButtonStatus(btnAbsent, pertemuan)
+                ButtonUtils.setButtonTextAndStyle(btnAbsent, pertemuan)
+                ButtonUtils.setButtonBackgroundColor(context, btnAbsent, pertemuan)
 
                 btnAbsent.setOnClickListener {
                     absent(pertemuan)

@@ -20,8 +20,7 @@ abstract class JadwalDatabase : RoomDatabase() {
                     context,
                     JadwalDatabase::class.java,
                     "jadwal.db"
-                )
-                    .build()
+                ).build()
             }
         }
     }

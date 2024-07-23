@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/schedule"
     style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
     android:layout_marginBottom="10dp"
-    android:backgroundTint="@color/white"
+    android:backgroundTint="@color/white_200"
     android:clickable="true"
     android:elevation="5dp"
     android:focusable="true"
-    app:rippleColor="@color/silver_200"
-    card_view:cardCornerRadius="15dp">
+    app:cardCornerRadius="15dp"
+    app:rippleColor="@color/silver_200">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,10 +31,10 @@
             android:paddingTop="5dp"
             android:paddingEnd="5dp"
             android:paddingBottom="10dp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toStartOf="@+id/btnAbsent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnAbsent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/nameMK"
@@ -139,8 +138,8 @@
             android:textStyle="bold"
             app:cornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

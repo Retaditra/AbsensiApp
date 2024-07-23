@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/schedule"
     style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp"
     android:layout_marginTop="5dp"
+    android:layout_marginEnd="20dp"
     android:backgroundTint="@color/white_200"
     android:clickable="true"
     android:elevation="5dp"
     android:focusable="true"
-    app:rippleColor="@color/silver_200"
-    card_view:cardCornerRadius="15dp">
+    app:cardCornerRadius="15dp"
+    app:rippleColor="@color/silver_200">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,10 +25,10 @@
             android:id="@+id/nameMK"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:layout_marginStart="10dp"
             android:text="Nama Matakuliah"
             android:textSize="14sp"
             android:transitionName="name"

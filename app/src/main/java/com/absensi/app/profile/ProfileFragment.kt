@@ -41,7 +41,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         preference = EncryptPreferences(requireContext())
 
-        recyclerView = binding.rvMatkulPorofile
+        recyclerView = binding.rvProfile
         adapter = ProfileAdapter(
             onClick = {
                 Toast.makeText(requireContext(), it.idMk, Toast.LENGTH_SHORT).show()
