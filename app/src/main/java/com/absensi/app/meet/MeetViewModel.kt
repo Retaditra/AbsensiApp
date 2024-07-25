@@ -1,49 +1,53 @@
-package com.absensi.app.jadwal
+package com.absensi.app.meet
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.absensi.app.R
 import com.absensi.app.data.ApiConfig
-import com.absensi.app.data.Matkul
-import com.absensi.app.data.respone.MatkulResponse
+import com.absensi.app.data.Pertemuan
+import com.absensi.app.data.respone.PertemuanResponse
 import com.absensi.app.utils.DataMapper
-import com.absensi.app.utils.parseError
+import com.absensi.app.utils.parseErrorMsg
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class JadwalViewModel(application: Application) : AndroidViewModel(application) {
+class MeetViewModel(application: Application) : AndroidViewModel(application) {
 
-    fun getJadwal(
+    fun getMeet(
         token: String,
-        onSuccess: (List<Matkul>) -> Unit,
+        id: String,
+        onSuccess: (List<Pertemuan>) -> Unit,
         onFailure: (String) -> Unit,
         loading: (Boolean) -> Unit
     ) {
         loading(true)
         val apiService = ApiConfig().getApi()
-        val call = apiService.getJadwal("Bearer $token")
+        val call = apiService.getMeet("Bearer $token", id)
 
-        call.enqueue(object : Callback<MatkulResponse> {
+        call.enqueue(object : Callback<PertemuanResponse> {
             override fun onResponse(
-                call: Call<MatkulResponse>,
-                response: Response<MatkulResponse>
+                call: Call<PertemuanResponse>,
+                response: Response<PertemuanResponse>
             ) {
                 if (response.isSuccessful) {
+                    val error = response.message()
+                    Log.d("ERROR", error.toString())
                     val item = response.body()?.data
                     if (item != null) {
-                        val data = DataMapper().responseToMatkul(item)
+                        val data = DataMapper().responseToMeet(item)
                         onSuccess(data)
-                        loading(false)
                     }
+                    loading(false)
                 } else {
                     val error = response.errorBody()?.string()
-                    onFailure(parseError(error.toString()))
+                    onFailure(parseErrorMsg(error))
                     loading(false)
                 }
             }
 
-            override fun onFailure(call: Call<MatkulResponse>, t: Throwable) {
+            override fun onFailure(call: Call<PertemuanResponse>, t: Throwable) {
                 onFailure(getApplication<Application>().getString(R.string.failure))
                 loading(false)
             }

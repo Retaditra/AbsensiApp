@@ -1,18 +1,18 @@
 package com.absensi.app.jadwal
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.absensi.app.data.Jadwal
+import com.absensi.app.data.Matkul
 import com.absensi.app.databinding.JadwalBinding
+import com.absensi.app.utils.formatDate
 
 class JadwalAdapter(
-    private val onClick: (Jadwal) -> Unit
+    private val onClick: (Matkul) -> Unit
 ) :
-    PagingDataAdapter<Jadwal, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+    PagingDataAdapter<Matkul, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding =
@@ -30,11 +30,14 @@ class JadwalAdapter(
     inner class ItemViewHolder(private val binding: JadwalBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(schedule: Jadwal) {
+        fun bind(schedule: Matkul) {
+            val dateFormat = schedule.tanggal?.let { formatDate(it) }
+
             with(binding) {
                 nameMk.text = schedule.namaMatkul
-                date.text = schedule.tanggal
+                date.text = dateFormat
             }
+
             itemView.setOnClickListener {
                 onClick(schedule)
             }
@@ -42,12 +45,12 @@ class JadwalAdapter(
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Jadwal>() {
-            override fun areItemsTheSame(oldItem: Jadwal, newItem: Jadwal): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Matkul>() {
+            override fun areItemsTheSame(oldItem: Matkul, newItem: Matkul): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: Jadwal, newItem: Jadwal): Boolean {
+            override fun areContentsTheSame(oldItem: Matkul, newItem: Matkul): Boolean {
                 return oldItem == newItem
             }
         }

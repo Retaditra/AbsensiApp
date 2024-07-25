@@ -1,4 +1,4 @@
-package com.absensi.app.home
+package com.absensi.app.history
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.absensi.app.databinding.HistoryBinding
 import com.absensi.app.utils.ButtonUtils
 import com.absensi.app.utils.formatDate
 
-class HomeAdapter(
+class HistoryAdapter(
     private val context: Context,
     private val absent: (Pertemuan) -> Unit
 ) :

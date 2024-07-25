@@ -1,67 +1,29 @@
-package com.absensi.app.profile
+package com.absensi.app.absent
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.absensi.app.R
 import com.absensi.app.data.ApiConfig
-import com.absensi.app.data.Matkul
-import com.absensi.app.data.respone.MatkulResponse
+import com.absensi.app.data.respone.AbsentRequest
+import com.absensi.app.data.respone.IzinRequest
 import com.absensi.app.data.respone.MessageResponse
-import com.absensi.app.data.respone.UpdateRequest
-import com.absensi.app.utils.DataMapper
-import com.absensi.app.utils.parseError
 import com.absensi.app.utils.parseErrorMsg
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProfileViewModel(application: Application) : AndroidViewModel(application) {
+class AbsentViewModel(application: Application) : AndroidViewModel(application) {
 
-    fun getMatkulProfile(
+    fun absent(
         token: String,
-        onSuccess: (List<Matkul>) -> Unit,
-        onFailure: (String) -> Unit,
-        loading: (Boolean) -> Unit
-    ) {
-        loading(true)
-        val call = ApiConfig().getApi().getAllMatkul("Bearer $token")
-        call.enqueue(object : Callback<MatkulResponse> {
-            override fun onResponse(
-                call: Call<MatkulResponse>, response: Response<MatkulResponse>
-            ) {
-                loading(false)
-                if (response.isSuccessful) {
-                    val error = response.message()
-                    Log.d("ERROR", error.toString())
-                    val item = response.body()?.data
-                    if (item != null) {
-                        val data = DataMapper().responseToMatkul(item)
-                        onSuccess(data)
-                    }
-                } else {
-                    val error = response.errorBody()?.string()
-                    onFailure(parseError(error.toString()))
-                    loading(false)
-                }
-            }
-
-            override fun onFailure(call: Call<MatkulResponse>, t: Throwable) {
-                onFailure(getApplication<Application>().getString(R.string.failure))
-                loading(false)
-            }
-        })
-    }
-
-    fun logout(
-        token: String,
+        request: (AbsentRequest),
         onSuccess: (String) -> Unit,
         onFailure: (String) -> Unit,
         loading: (Boolean) -> Unit
     ) {
         loading(true)
         val apiService = ApiConfig().getApi()
-        val call = apiService.logout("Bearer $token")
+        val call = apiService.absent("Bearer $token", request)
 
         call.enqueue(object : Callback<MessageResponse> {
             override fun onResponse(
@@ -74,7 +36,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
                     loading(false)
                 } else {
                     val error = response.errorBody()?.string()
-                    onFailure(parseError(error.toString()))
+                    onFailure(parseErrorMsg(error))
                     loading(false)
                 }
             }
@@ -86,16 +48,16 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         })
     }
 
-    fun updateProfile(
+    fun izin(
         token: String,
-        request: (UpdateRequest),
+        request: (IzinRequest),
         onSuccess: (String) -> Unit,
         onFailure: (String) -> Unit,
         loading: (Boolean) -> Unit
     ) {
         loading(true)
         val apiService = ApiConfig().getApi()
-        val call = apiService.getUpdate("Bearer $token", request)
+        val call = apiService.izin("Bearer $token", request)
 
         call.enqueue(object : Callback<MessageResponse> {
             override fun onResponse(

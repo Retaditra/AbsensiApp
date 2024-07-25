@@ -23,10 +23,10 @@ interface ApiService {
     fun getAllMatkul(@Header("Authorization") token: String): Call<MatkulResponse>
 
     @GET("/api/jadwal")
-    fun getJadwal(@Header("Authorization") token: String): Call<JadwalResponse>
+    fun getJadwal(@Header("Authorization") token: String): Call<MatkulResponse>
 
     @GET("/api/matakuliah/{id}/pertemuan")
-    fun getPertemuan(
+    fun getMeet(
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): Call<PertemuanResponse>

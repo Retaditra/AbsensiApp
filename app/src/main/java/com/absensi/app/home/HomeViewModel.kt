@@ -6,7 +6,9 @@ import androidx.lifecycle.AndroidViewModel
 import com.absensi.app.R
 import com.absensi.app.data.ApiConfig
 import com.absensi.app.data.Pertemuan
-import com.absensi.app.data.respone.*
+import com.absensi.app.data.respone.PertemuanResponse
+import com.absensi.app.data.respone.ProfileData
+import com.absensi.app.data.respone.ProfileResponse
 import com.absensi.app.utils.DataMapper
 import com.absensi.app.utils.UserProfilePreferences
 import com.absensi.app.utils.parseError
@@ -77,9 +79,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                     Log.d("ERROR", error.toString())
                     val item = response.body()?.data
                     if (item != null) {
-                        val data = DataMapper().responseToPertemuan(item)
+                        val data = DataMapper().responseToMeet(item)
                         onSuccess(data)
                     }
+                    loading(false)
                 } else {
                     val error = response.errorBody()?.string()
                     onFailure(parseError(error))
@@ -89,43 +92,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
             override fun onFailure(call: Call<PertemuanResponse>, t: Throwable) {
                 onFailure(getApplication<Application>().getString(R.string.failure))
-                loading(false)
-            }
-        })
-    }
-
-    fun absent(
-        token: String,
-        id: String,
-        kode: String,
-        message: (String) -> Unit,
-        loading: (Boolean) -> Unit
-    ) {
-        loading(true)
-        val request = AbsentRequest(id, kode)
-        val apiService = ApiConfig().getApi()
-        val call = apiService.absent("Bearer $token", request)
-
-        call.enqueue(object : Callback<MessageResponse> {
-            override fun onResponse(
-                call: Call<MessageResponse>,
-                response: Response<MessageResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val data = response.body()?.message
-                    if (data != null) {
-                        message(data)
-                        loading(false)
-                    }
-                } else {
-                    val error = response.errorBody()?.string()
-                    message(parseError(error))
-                    loading(false)
-                }
-            }
-
-            override fun onFailure(call: Call<MessageResponse>, t: Throwable) {
-                message(getApplication<Application>().getString(R.string.failure))
                 loading(false)
             }
         })

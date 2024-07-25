@@ -17,15 +17,6 @@ data class JadwalEntity(
     @ColumnInfo(name = "nama_mk")
     val nama_mk: String,
 
-    @ColumnInfo(name = "nama_dsn")
-    val nama_dsn: String,
-
-    @ColumnInfo(name = "semester")
-    val semester: String,
-
-    @ColumnInfo(name = "pertemuan_ke")
-    val pertemuan_ke: String,
-
     @ColumnInfo(name = "hari")
     val hari: String,
 

@@ -27,19 +27,30 @@ object ButtonUtils {
             }
             pertemuan.kode_absensi == "1" && pertemuan.status == "1" -> {
                 text = "Proses"
-                textSize = 12f
+                textSize = 10f
                 textColor = ContextCompat.getColor(button.context, R.color.white)
             }
-            pertemuan.kode_absensi == "0" && pertemuan.status == "2" -> {
+            pertemuan.kode_absensi == "1" && pertemuan.status == "2" -> {
+                text = "Proses"
+                textSize = 10f
+                textColor = ContextCompat.getColor(button.context, R.color.white)
+            }
+            pertemuan.kode_absensi == "0" && pertemuan.status == "1" -> {
                 text = "Hadir"
                 textSize = 12f
                 textColor = ContextCompat.getColor(button.context, R.color.white)
             }
-            pertemuan.kode_absensi == "0" && pertemuan.status == "3" -> {
+            pertemuan.kode_absensi == "0" && pertemuan.status == "2" -> {
                 text = "Izin"
                 textSize = 12f
                 textColor = ContextCompat.getColor(button.context, R.color.white)
             }
+            pertemuan.kode_absensi == "0" && pertemuan.status == "3" -> {
+                text = "Tidak Hadir"
+                textSize = 10f
+                textColor = ContextCompat.getColor(button.context, R.color.white)
+            }
+
             else -> {
                 text = "Absen"
                 textSize = 12f
@@ -70,13 +81,19 @@ object ButtonUtils {
                 ContextCompat.getColor(context, R.color.red)
 
             pertemuan.kode_absensi == "1" && pertemuan.status == "1" ->
-                ContextCompat.getColor(context, R.color.gold)
+                ContextCompat.getColor(context, R.color.blue)
 
-            pertemuan.kode_absensi == "0" && pertemuan.status == "2" ->
+            pertemuan.kode_absensi == "1" && pertemuan.status == "2" ->
+                ContextCompat.getColor(context, R.color.blue)
+
+            pertemuan.kode_absensi == "0" && pertemuan.status == "1" ->
                 ContextCompat.getColor(context, R.color.green)
 
+            pertemuan.kode_absensi == "0" && pertemuan.status == "2" ->
+                ContextCompat.getColor(context, R.color.gold)
+
             pertemuan.kode_absensi == "0" && pertemuan.status == "3" ->
-                ContextCompat.getColor(context, R.color.yellow)
+                ContextCompat.getColor(context, R.color.gold)
 
             else -> ContextCompat.getColor(context, R.color.silver_200)
         }

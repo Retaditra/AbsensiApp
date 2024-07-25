@@ -23,5 +23,9 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigate">Navigasi</string>
+    <string name="close">Close</string>
+
+    <string name="noEmpty">Tidak boleh kosong</string>
+    <string name="pass_not_march">Password tidak sama</string>
 
 </resources>

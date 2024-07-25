@@ -12,12 +12,12 @@ data class MatkulResponse(
 )
 
 data class MatkulData(
-    @SerializedName("id")
-    val id: String,
+    @SerializedName("id_mk")
+    val id_mk: String,
     @SerializedName("nama_mk")
     val nama_mk: String,
-    @SerializedName("nama_dsn")
-    val nama_dsn: String,
-    @SerializedName("semester")
-    val semester: String,
+    @SerializedName("hari")
+    val hari: String,
+    @SerializedName("tanggal")
+    val tanggal: String,
 )

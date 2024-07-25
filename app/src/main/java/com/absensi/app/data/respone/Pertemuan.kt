@@ -26,6 +26,8 @@ data class PertemuanData(
     val tanggal: String,
     @SerializedName("waktu")
     val waktu: String,
+    @SerializedName("semester")
+    val semester: String,
     @SerializedName("nama_dsn")
     val nama_dsn: String,
     @SerializedName("kode_absensi")

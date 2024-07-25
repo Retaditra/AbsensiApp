@@ -1,60 +1,91 @@
 package com.absensi.app.history
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.paging.PagingData
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.absensi.app.R
+import com.absensi.app.data.Pertemuan
+import com.absensi.app.databinding.FragmentHistoryBinding
+import com.absensi.app.utils.EncryptPreferences
+import com.absensi.app.utils.expired
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HistoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HistoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentHistoryBinding
+    private lateinit var adapter: HistoryAdapter
+    private lateinit var recyclerView: RecyclerView
+    private val handler = Handler(Looper.getMainLooper())
+    private val viewModel: HistoryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false)
+    ): View {
+        binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HistoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HistoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recyclerView = binding.rvHistory
+        adapter = HistoryAdapter(
+            context = requireContext(),
+            absent = { Toast.makeText(requireContext(), it.id, Toast.LENGTH_SHORT).show() })
+
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@HistoryFragment.adapter
+        }
+
+        getHistory()
+        refresh()
+    }
+
+    private fun getHistory(callback: (Boolean, String?) -> Unit = { _, _ -> }) {
+        val preference = EncryptPreferences(requireContext())
+        val token = preference.getPreferences().getString("token", null)
+
+        viewModel.getHistory(token.toString(),
+            onSuccess = {
+                val pagingData: PagingData<Pertemuan> = PagingData.from(it)
+                adapter.submitData(lifecycle, pagingData)
+                recyclerView.layoutManager?.scrollToPosition(0)
+                callback(true, null)
+            },
+            onFailure = {
+                expired(it, requireContext())
+                callback(false, it)
+            },
+            loading = {
+                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+            })
+    }
+
+    private fun refresh() {
+        binding.refresh.setOnClickListener {
+            binding.refresh.visibility = View.GONE
+            getHistory { success, message ->
+                if (success) {
+                    Toast.makeText(
+                        requireContext(), getString(R.string.refreshSuccess), Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                 }
             }
+            handler.postDelayed({
+                binding.refresh.visibility = View.VISIBLE
+            }, 3000.toLong())
+        }
     }
 }

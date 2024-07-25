@@ -12,6 +12,7 @@ data class Pertemuan(
     val hari: String? = null,
     val tanggal: String? = null,
     val waktu: String? = null,
+    val semester: String? = null,
     val namaDosen: String? = null,
     val kode_absensi: String? = null,
     val status: String? = null,

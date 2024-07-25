@@ -1,4 +1,4 @@
-package com.absensi.app.home
+package com.absensi.app.meet
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.absensi.app.data.Pertemuan
-import com.absensi.app.databinding.HistoryBinding
+import com.absensi.app.databinding.PertemuanBinding
 import com.absensi.app.utils.ButtonUtils
 import com.absensi.app.utils.formatDate
 
-class HomeAdapter(
+class MeetAdapter(
     private val context: Context,
     private val absent: (Pertemuan) -> Unit
 ) :
@@ -19,7 +19,7 @@ class HomeAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding =
-            HistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            PertemuanBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)
     }
 
@@ -30,15 +30,15 @@ class HomeAdapter(
         }
     }
 
-    inner class ItemViewHolder(private val binding: HistoryBinding) :
+    inner class ItemViewHolder(private val binding: PertemuanBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(pertemuan: Pertemuan) {
             val jamText = "${pertemuan.waktu} WIB"
             val date = pertemuan.tanggal?.let { formatDate(it) }
             with(binding) {
-                nameMK.text = pertemuan.namaMatkul
-                ptm.text = pertemuan.pertemuan_ke
+                isiPtm.text = pertemuan.pertemuan_ke
+                semester.text = pertemuan.semester
                 tanggal.text = date
                 jam.text = jamText
                 nameDsn.text = pertemuan.namaDosen

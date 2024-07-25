@@ -29,7 +29,7 @@
         android:background="@android:color/transparent"
         app:icon="@drawable/refresh"
         app:iconGravity="top"
-        app:iconTint="@color/red_brick"
+        app:iconTint="@color/gold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
@@ -37,10 +37,11 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/refresh"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:itemCount="3"
         tools:listitem="@layout/jadwal" />
 

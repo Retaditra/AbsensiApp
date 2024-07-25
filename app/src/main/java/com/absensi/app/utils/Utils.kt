@@ -1,8 +1,8 @@
 package com.absensi.app.utils
 
 import android.content.Context
-import com.absensi.app.data.respone.MatkulResponse
 import com.absensi.app.data.respone.MessageResponse
+import com.absensi.app.data.respone.PertemuanResponse
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,7 +16,16 @@ fun executeThread(f: () -> Unit) {
 
 fun parseError(error: String?): String {
     return if (error != null) {
-        val errorResponse = Gson().fromJson(error, MatkulResponse::class.java)
+        val errorResponse = Gson().fromJson(error, PertemuanResponse::class.java)
+        (errorResponse.message)
+    } else {
+        ("Terjadi Kesalahan")
+    }
+}
+
+fun parseErrorMsg(error: String?): String {
+    return if (error != null) {
+        val errorResponse = Gson().fromJson(error, MessageResponse::class.java)
         (errorResponse.message)
     } else {
         ("Terjadi Kesalahan")

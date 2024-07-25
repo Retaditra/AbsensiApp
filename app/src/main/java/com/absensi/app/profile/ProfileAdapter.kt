@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.absensi.app.data.Jadwal
+import com.absensi.app.data.Matkul
 import com.absensi.app.databinding.MatkulBinding
 
-class ProfileAdapter(private val onClick: (Jadwal) -> Unit) :
-    PagingDataAdapter<Jadwal, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+class ProfileAdapter(private val onClick: (Matkul) -> Unit) :
+    PagingDataAdapter<Matkul, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding =
@@ -27,23 +27,23 @@ class ProfileAdapter(private val onClick: (Jadwal) -> Unit) :
     inner class ItemViewHolder(private val binding: MatkulBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(pertemuan: Jadwal) {
+        fun bind(matkul: Matkul) {
             with(binding) {
-                nameMK.text = pertemuan.namaMatkul
+                nameMK.text = matkul.namaMatkul
             }
             itemView.setOnClickListener {
-                onClick(pertemuan)
+                onClick(matkul)
             }
         }
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Jadwal>() {
-            override fun areItemsTheSame(oldItem: Jadwal, newItem: Jadwal): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Matkul>() {
+            override fun areItemsTheSame(oldItem: Matkul, newItem: Matkul): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: Jadwal, newItem: Jadwal): Boolean {
+            override fun areContentsTheSame(oldItem: Matkul, newItem: Matkul): Boolean {
                 return oldItem == newItem
             }
         }

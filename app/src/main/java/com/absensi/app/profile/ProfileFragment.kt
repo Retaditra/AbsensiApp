@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,10 +14,11 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.absensi.app.R
-import com.absensi.app.data.Jadwal
+import com.absensi.app.data.Matkul
 import com.absensi.app.data.database.JadwalRepository
 import com.absensi.app.databinding.FragmentProfileBinding
 import com.absensi.app.login.LoginActivity
+import com.absensi.app.meet.MeetFragment
 import com.absensi.app.utils.EncryptPreferences
 import com.absensi.app.utils.UserProfilePreferences
 import com.absensi.app.utils.expired
@@ -44,7 +46,7 @@ class ProfileFragment : Fragment() {
         recyclerView = binding.rvProfile
         adapter = ProfileAdapter(
             onClick = {
-                Toast.makeText(requireContext(), it.idMk, Toast.LENGTH_SHORT).show()
+                detail(it.id_mk.toString(), it.namaMatkul.toString())
             }
         )
 
@@ -55,6 +57,11 @@ class ProfileFragment : Fragment() {
 
         getMatkul()
         userProfile()
+
+        binding.btnUpdate.setOnClickListener {
+            update()
+        }
+
         binding.btnLogout.setOnClickListener {
             logout()
         }
@@ -80,7 +87,7 @@ class ProfileFragment : Fragment() {
 
         viewModel.getMatkulProfile(token.toString(),
             onSuccess = {
-                val pagingData: PagingData<Jadwal> = PagingData.from(it)
+                val pagingData: PagingData<Matkul> = PagingData.from(it)
                 adapter.submitData(lifecycle, pagingData)
                 recyclerView.layoutManager?.scrollToPosition(0)
             },
@@ -91,6 +98,16 @@ class ProfileFragment : Fragment() {
             loading = {
                 binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
             })
+    }
+
+    private fun update() {
+        val fragment = UpdateFragment.newInstance()
+        (requireActivity() as AppCompatActivity).supportFragmentManager
+            .beginTransaction().apply {
+                replace(R.id.fragment_container, fragment)
+                addToBackStack(null)
+                commit()
+            }
     }
 
     private fun logout() {
@@ -127,5 +144,15 @@ class ProfileFragment : Fragment() {
         val intent = Intent(requireContext(), LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+    }
+
+    private fun detail(id: String, name: String) {
+        val fragment = MeetFragment.newInstance(id, name)
+        (requireActivity() as AppCompatActivity).supportFragmentManager
+            .beginTransaction().apply {
+                replace(R.id.fragment_container, fragment)
+                addToBackStack(null)
+                commit()
+            }
     }
 }
