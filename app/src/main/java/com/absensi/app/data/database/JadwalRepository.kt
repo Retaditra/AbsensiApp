@@ -4,38 +4,21 @@ import android.content.Context
 import com.absensi.app.utils.executeThread
 
 class JadwalRepository(private val dao: JadwalDao) {
+    fun insertAll(schedule: MutableList<JadwalEntity>) {
+        executeThread { dao.insertAll(schedule) }
+    }
 
     fun getJadwal(): List<JadwalEntity> {
         return dao.getJadwal()
     }
 
-    fun insertAll(schedule: MutableList<JadwalEntity>) {
-        executeThread { dao.insertAll(schedule) }
+    fun getByDay(day: String): List<JadwalEntity> {
+        return dao.getByDay(day)
     }
 
     fun deleteAll() {
         executeThread { dao.deleteAll() }
     }
-
-//    fun getSenin(): List<JadwalEntity> {
-//        return dao.getSenin()
-//    }
-//
-//    fun getSelasa(): List<JadwalEntity> {
-//        return dao.getSelasa()
-//    }
-//
-//    fun getRabu(): List<JadwalEntity> {
-//        return dao.getRabu()
-//    }
-//
-//    fun getKamis(): List<JadwalEntity> {
-//        return dao.getKamis()
-//    }
-//
-//    fun getJumat(): List<JadwalEntity> {
-//        return dao.getJumat()
-//    }
 
     companion object {
         @Volatile

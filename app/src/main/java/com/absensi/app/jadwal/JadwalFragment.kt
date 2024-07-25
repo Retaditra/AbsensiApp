@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.absensi.app.R
 import com.absensi.app.data.Matkul
 import com.absensi.app.data.database.JadwalEntity
@@ -32,7 +31,6 @@ class JadwalFragment : Fragment() {
     private lateinit var binding: FragmentJadwalBinding
     private lateinit var adapter: JadwalAdapter
     private lateinit var repository: JadwalRepository
-    private lateinit var recyclerView: RecyclerView
     private val handler = Handler(Looper.getMainLooper())
     private val viewModel: JadwalViewModel by viewModels()
 
@@ -47,30 +45,56 @@ class JadwalFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         repository = JadwalRepository.getInstance(requireContext())
-        recyclerView = binding.recyclerView
 
-        setupRecyclerView()
+        refresh()
+        setupRecyclerViews()
         getSchedule()
         getJadwal()
-        refresh()
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerViews() {
         adapter = JadwalAdapter(
             onClick = {
                 detail(it.id_mk.toString(), it.namaMatkul.toString())
             },
         )
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@JadwalFragment.adapter
+        val recyclerViews = listOf(
+            binding.rvSenin,
+            binding.rvSelasa,
+            binding.rvRabu,
+            binding.rvKamis,
+            binding.rvJumat
+        )
+        recyclerViews.forEach { recyclerView ->
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView.adapter = adapter
         }
     }
 
-    private fun listToAdapter(schedule: List<JadwalEntity>) {
-        val data = DataMapper().entityToMeet(schedule)
-        val pagingData: PagingData<Matkul> = PagingData.from(data)
-        adapter.submitData(lifecycle, pagingData)
+    private fun getJadwal() {
+        val days = listOf("Senin", "Selasa", "Rabu", "Kamis", "Jumat")
+        val recyclerViews = listOf(
+            binding.rvSenin,
+            binding.rvSelasa,
+            binding.rvRabu,
+            binding.rvKamis,
+            binding.rvJumat
+        )
+
+        days.forEachIndexed { index, day ->
+            lifecycleScope.launch {
+                val dayData = withContext(Dispatchers.IO) { repository.getByDay(day) }
+                val data = DataMapper().entityToMeet(dayData)
+                val pagingData: PagingData<Matkul> = PagingData.from(data)
+                recyclerViews[index].adapter = JadwalAdapter(
+                    onClick = {
+                        detail(it.id_mk.toString(), it.namaMatkul.toString())
+                    }
+                ).apply {
+                    submitData(lifecycle, pagingData)
+                }
+            }
+        }
     }
 
     private fun getSchedule(callback: (Boolean, String?) -> Unit = { _, _ -> }) {
@@ -79,10 +103,6 @@ class JadwalFragment : Fragment() {
 
         viewModel.getJadwal(token.toString(),
             onSuccess = {
-                val pagingData: PagingData<Matkul> = PagingData.from(it)
-                adapter.submitData(lifecycle, pagingData)
-                recyclerView.layoutManager?.scrollToPosition(0)
-
                 val data = mutableListOf<JadwalEntity>()
                 for (schedule in it) {
                     val mapper = DataMapper().meetToEntity(schedule)
@@ -103,16 +123,11 @@ class JadwalFragment : Fragment() {
             })
     }
 
-    private fun getJadwal() {
-        lifecycleScope.launch {
-            val schedules = withContext(Dispatchers.IO) { repository.getJadwal() }
-            listToAdapter(schedules)
-        }
-    }
-
     private fun refresh() {
         binding.refresh.setOnClickListener {
             binding.refresh.visibility = View.GONE
+            setupRecyclerViews()
+            getJadwal()
             getSchedule { success, message ->
                 if (success) {
                     Toast.makeText(
