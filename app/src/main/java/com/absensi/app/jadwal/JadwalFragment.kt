@@ -46,10 +46,10 @@ class JadwalFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         repository = JadwalRepository.getInstance(requireContext())
 
-        refresh()
         setupRecyclerViews()
         getSchedule()
         getJadwal()
+        refresh()
     }
 
     private fun setupRecyclerViews() {
@@ -103,23 +103,29 @@ class JadwalFragment : Fragment() {
 
         viewModel.getJadwal(token.toString(),
             onSuccess = {
-                val data = mutableListOf<JadwalEntity>()
-                for (schedule in it) {
-                    val mapper = DataMapper().meetToEntity(schedule)
-                    data.add(mapper)
+                if (isAdded) {
+                    val data = mutableListOf<JadwalEntity>()
+                    for (schedule in it) {
+                        val mapper = DataMapper().meetToEntity(schedule)
+                        data.add(mapper)
+                    }
+                    lifecycleScope.launch {
+                        repository.deleteAll()
+                        repository.insertAll(data)
+                    }
+                    callback(true, null)
                 }
-                lifecycleScope.launch {
-                    repository.deleteAll()
-                    repository.insertAll(data)
-                }
-                callback(true, null)
             },
             onFailure = {
-                expired(it, requireContext())
-                callback(false, it)
+                if (isAdded) {
+                    expired(it, requireContext())
+                    callback(false, it)
+                }
             },
             loading = {
-                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                if (isAdded) {
+                    binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                }
             })
     }
 
@@ -129,16 +135,22 @@ class JadwalFragment : Fragment() {
             setupRecyclerViews()
             getJadwal()
             getSchedule { success, message ->
-                if (success) {
-                    Toast.makeText(
-                        requireContext(), getString(R.string.refreshSuccess), Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                if (isAdded) {
+                    if (success) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.refreshSuccess),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             handler.postDelayed({
-                binding.refresh.visibility = View.VISIBLE
+                if (isAdded) {
+                    binding.refresh.visibility = View.VISIBLE
+                }
             }, 3000.toLong())
         }
     }

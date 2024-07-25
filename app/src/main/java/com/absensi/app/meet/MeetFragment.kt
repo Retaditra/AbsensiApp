@@ -49,8 +49,8 @@ class MeetFragment : BottomSheetDialogFragment() {
             adapter = this@MeetFragment.adapter
         }
 
-        setupView()
         setupButton()
+        setupView()
 
         return binding.root
     }
@@ -79,17 +79,27 @@ class MeetFragment : BottomSheetDialogFragment() {
 
         viewModel.getMeet(token.toString(), id,
             onSuccess = {
-                val pagingData: PagingData<Pertemuan> = PagingData.from(it)
-                adapter.submitData(lifecycle, pagingData)
-                recyclerView.layoutManager?.scrollToPosition(0)
-                callback(true, null)
+                if (isAdded) {
+                    if (it.isEmpty()) {
+                        binding.noData.visibility = View.VISIBLE
+                    } else {
+                        val pagingData: PagingData<Pertemuan> = PagingData.from(it)
+                        adapter.submitData(lifecycle, pagingData)
+                        recyclerView.layoutManager?.scrollToPosition(0)
+                        callback(true, null)
+                    }
+                }
             },
             onFailure = {
-                expired(it, requireContext())
-                callback(false, it)
+                if (isAdded) {
+                    expired(it, requireContext())
+                    callback(false, it)
+                }
             },
             loading = {
-                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                if (isAdded) {
+                    binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                }
             })
     }
 
@@ -107,20 +117,25 @@ class MeetFragment : BottomSheetDialogFragment() {
         binding.refresh.setOnClickListener {
             binding.refresh.visibility = View.GONE
             getMeet(id) { success, message ->
-                if (success) {
-                    Toast.makeText(
-                        requireContext(), getString(R.string.refreshSuccess), Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                if (isAdded) {
+                    if (success) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.refreshSuccess),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             handler.postDelayed({
-                binding.refresh.visibility = View.VISIBLE
+                if (isAdded) {
+                    binding.refresh.visibility = View.VISIBLE
+                }
             }, 3000.toLong())
         }
     }
-
 
     companion object {
         fun newInstance(id: String, name: String): MeetFragment {

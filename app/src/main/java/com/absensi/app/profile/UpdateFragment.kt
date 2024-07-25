@@ -62,15 +62,21 @@ class UpdateFragment : BottomSheetDialogFragment() {
         viewModel.updateProfile(token.toString(),
             request = UpdateRequest(current, new, confirm),
             onSuccess = {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                requireActivity().supportFragmentManager.popBackStack()
+                if(isAdded) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    requireActivity().supportFragmentManager.popBackStack()
+                }
             },
             onFailure = {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                expired(it, requireContext())
+                if(isAdded) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    expired(it, requireContext())
+                }
             },
             loading = {
-                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                if(isAdded) {
+                    binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                }
             })
     }
 

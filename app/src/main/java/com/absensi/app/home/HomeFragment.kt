@@ -85,16 +85,22 @@ class HomeFragment : Fragment() {
 
         viewModel.userProfile(token.toString(),
             onSuccess = {
-                binding.apply {
-                    name.text = it.nama
-                    nim.text = it.nim
+                if (isAdded) {
+                    binding.apply {
+                        name.text = it.nama
+                        nim.text = it.nim
+                    }
                 }
             },
             onFailure = {
-                expired(it, requireContext())
+                if (isAdded) {
+                    expired(it, requireContext())
+                }
             },
             loading = {
-                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                if (isAdded) {
+                    binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                }
             })
     }
 
@@ -104,18 +110,28 @@ class HomeFragment : Fragment() {
 
         viewModel.getToday(token.toString(),
             onSuccess = {
-                val pagingData: PagingData<Pertemuan> = PagingData.from(it)
-                adapter.submitData(lifecycle, pagingData)
-                recyclerView.layoutManager?.scrollToPosition(0)
-                callback(true, null)
+                if (isAdded) {
+                    val pagingData: PagingData<Pertemuan> = PagingData.from(it)
+                    adapter.submitData(lifecycle, pagingData)
+                    recyclerView.layoutManager?.scrollToPosition(0)
+                    callback(true, null)
+                    if (it.isEmpty()) {
+                        binding.noData.visibility = View.VISIBLE
+                    }
+                }
             },
+
             onFailure = {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                expired(it, requireContext())
-                callback(false, it)
+                if (isAdded) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    expired(it, requireContext())
+                    callback(false, it)
+                }
             },
             loading = {
-                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                if (isAdded) {
+                    binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                }
             })
     }
 
@@ -123,16 +139,22 @@ class HomeFragment : Fragment() {
         binding.refresh.setOnClickListener {
             binding.refresh.visibility = View.GONE
             getToday { success, message ->
-                if (success) {
-                    Toast.makeText(
-                        requireContext(), getString(R.string.refreshSuccess), Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                if (isAdded) {
+                    if (success) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.refreshSuccess),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             handler.postDelayed({
-                binding.refresh.visibility = View.VISIBLE
+                if (isAdded) {
+                    binding.refresh.visibility = View.VISIBLE
+                }
             }, 3000.toLong())
         }
     }

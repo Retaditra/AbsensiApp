@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.addCallback
-import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.fragment.app.viewModels
 import com.absensi.app.R
 import com.absensi.app.data.respone.IzinRequest
@@ -67,16 +65,22 @@ class IzinFragment : BottomSheetDialogFragment() {
         viewModel.izin(token.toString(),
             request = IzinRequest(id.toString(), ket),
             onSuccess = {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                requireActivity().supportFragmentManager.popBackStack()
-                requireActivity().supportFragmentManager.popBackStack()
+                if (isAdded) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    requireActivity().supportFragmentManager.popBackStack()
+                    requireActivity().supportFragmentManager.popBackStack()
+                }
             },
             onFailure = {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                expired(it, requireContext())
+                if (isAdded) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    expired(it, requireContext())
+                }
             },
             loading = {
-                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                if (isAdded) {
+                    binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                }
             }
         )
     }

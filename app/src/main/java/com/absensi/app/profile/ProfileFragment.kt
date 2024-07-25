@@ -55,8 +55,8 @@ class ProfileFragment : Fragment() {
             adapter = this@ProfileFragment.adapter
         }
 
-        getMatkul()
         userProfile()
+        getMatkul()
 
         binding.btnUpdate.setOnClickListener {
             update()
@@ -87,16 +87,22 @@ class ProfileFragment : Fragment() {
 
         viewModel.getMatkulProfile(token.toString(),
             onSuccess = {
-                val pagingData: PagingData<Matkul> = PagingData.from(it)
-                adapter.submitData(lifecycle, pagingData)
-                recyclerView.layoutManager?.scrollToPosition(0)
+                if(isAdded) {
+                    val pagingData: PagingData<Matkul> = PagingData.from(it)
+                    adapter.submitData(lifecycle, pagingData)
+                    recyclerView.layoutManager?.scrollToPosition(0)
+                }
             },
             onFailure = {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                expired(it, requireContext())
+                if(isAdded) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    expired(it, requireContext())
+                }
             },
             loading = {
-                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                if(isAdded) {
+                    binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                }
             })
     }
 
@@ -115,19 +121,25 @@ class ProfileFragment : Fragment() {
 
         viewModel.logout(token.toString(),
             onSuccess = {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                logoutProses()
+                if(isAdded) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    logoutProses()
+                }
             },
             onFailure = {
-                logoutProses()
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.messageLogout),
-                    Toast.LENGTH_SHORT
-                ).show()
+                if(isAdded) {
+                    logoutProses()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.messageLogout),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             },
             loading = {
-                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                if(isAdded) {
+                    binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                }
             })
     }
 
