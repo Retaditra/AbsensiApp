@@ -22,7 +22,9 @@ import com.absensi.app.meet.MeetFragment
 import com.absensi.app.utils.EncryptPreferences
 import com.absensi.app.utils.UserProfilePreferences
 import com.absensi.app.utils.expired
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
@@ -87,20 +89,20 @@ class ProfileFragment : Fragment() {
 
         viewModel.getMatkulProfile(token.toString(),
             onSuccess = {
-                if(isAdded) {
+                if (isAdded) {
                     val pagingData: PagingData<Matkul> = PagingData.from(it)
                     adapter.submitData(lifecycle, pagingData)
                     recyclerView.layoutManager?.scrollToPosition(0)
                 }
             },
             onFailure = {
-                if(isAdded) {
+                if (isAdded) {
                     Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                     expired(it, requireContext())
                 }
             },
             loading = {
-                if(isAdded) {
+                if (isAdded) {
                     binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
                 }
             })
@@ -121,13 +123,13 @@ class ProfileFragment : Fragment() {
 
         viewModel.logout(token.toString(),
             onSuccess = {
-                if(isAdded) {
+                if (isAdded) {
                     Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                     logoutProses()
                 }
             },
             onFailure = {
-                if(isAdded) {
+                if (isAdded) {
                     logoutProses()
                     Toast.makeText(
                         requireContext(),
@@ -137,7 +139,7 @@ class ProfileFragment : Fragment() {
                 }
             },
             loading = {
-                if(isAdded) {
+                if (isAdded) {
                     binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
                 }
             })

@@ -46,8 +46,8 @@ class JadwalFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         repository = JadwalRepository.getInstance(requireContext())
 
-        setupRecyclerViews()
         getSchedule()
+        setupRecyclerViews()
         getJadwal()
         refresh()
     }
@@ -110,8 +110,16 @@ class JadwalFragment : Fragment() {
                         data.add(mapper)
                     }
                     lifecycleScope.launch {
-                        repository.deleteAll()
-                        repository.insertAll(data)
+                        if (data.isNotEmpty()) {
+                            repository.deleteAll()
+                            repository.insertAll(data)
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Tidak Ada Jadwal Minggu Ini",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                     callback(true, null)
                 }

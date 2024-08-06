@@ -17,8 +17,9 @@
     <color name="yellow">#FFFF00</color>
     <color name="orange">#FFFF8800</color>
     <color name="gold">#BF9D58</color>
-    <color name="grey">#2c2c2c</color>
 
+    <color name="grey">#2c2c2c</color>
+    <color name="grey_500">#1A3636</color>
 
     <color name="blue">#0A33BA</color>
     <color name="blue_200">#7F84A6</color>

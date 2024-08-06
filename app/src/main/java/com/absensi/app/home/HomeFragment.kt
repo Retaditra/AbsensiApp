@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,9 @@ import com.absensi.app.data.Pertemuan
 import com.absensi.app.databinding.FragmentHomeBinding
 import com.absensi.app.utils.EncryptPreferences
 import com.absensi.app.utils.expired
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,9 +55,10 @@ class HomeFragment : Fragment() {
             adapter = this@HomeFragment.adapter
         }
 
-        setupDate()
         userProfile()
         getToday()
+
+        setupDate()
         refresh()
     }
 

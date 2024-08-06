@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,9 @@ import com.absensi.app.data.Pertemuan
 import com.absensi.app.databinding.FragmentHistoryBinding
 import com.absensi.app.utils.EncryptPreferences
 import com.absensi.app.utils.expired
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HistoryFragment : Fragment() {
 
@@ -47,7 +51,11 @@ class HistoryFragment : Fragment() {
             adapter = this@HistoryFragment.adapter
         }
 
-        getHistory()
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                getHistory()
+            }
+        }
         refresh()
     }
 

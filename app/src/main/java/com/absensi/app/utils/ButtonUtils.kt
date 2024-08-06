@@ -93,7 +93,7 @@ object ButtonUtils {
                 ContextCompat.getColor(context, R.color.gold)
 
             pertemuan.kode_absensi == "0" && pertemuan.status == "3" ->
-                ContextCompat.getColor(context, R.color.gold)
+                ContextCompat.getColor(context, R.color.grey_500)
 
             else -> ContextCompat.getColor(context, R.color.silver_200)
         }

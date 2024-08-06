@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Nama Mahasiswa"
+        android:text="-"
         android:textColor="@color/blue_700"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -46,7 +46,7 @@
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mahasiswa@student.unperba.ac.id"
+        android:text="-"
         android:textColor="@color/blue_200"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:maxLines="1"
-                android:text="12345678"
+                android:text="-"
                 android:textColor="@color/blue_700"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Semseter"
+                android:text="Semester"
                 android:textColor="@color/blue_200"
                 android:textSize="14sp" />
 
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:maxLines="1"
-                android:text="4"
+                android:text="-"
                 android:textColor="@color/blue_700"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:maxLines="1"
-                android:text="Informatika"
+                android:text="-"
                 android:textColor="@color/blue_700"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -225,7 +225,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:maxLines="1"
-                android:text="Sains dan Teknik"
+                android:text="-"
                 android:textColor="@color/blue_700"
                 android:textSize="18sp"
                 android:textStyle="bold" />
